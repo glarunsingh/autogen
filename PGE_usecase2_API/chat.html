@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Autogen WebSocket Test</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f4f6f8;
+            }
+            .chat-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                width: 100%;
+                max-width: 800px;
+                background-color: white;
+                padding: 16px;
+                border-radius: 8px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            .chat-title {
+                font-size: 1.8em;
+                color: #333;
+                text-align: center;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+            #messages {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                max-height: 400px;
+                overflow-y: auto;
+                flex-grow: 1;
+            }
+            #messages li {
+                background-color: #e8f0fe;
+                color: #333;
+                padding: 8px 12px;
+                margin: 8px 0;
+                border-radius: 15px;
+                max-width: 80%;
+                word-wrap: break-word;
+            }
+            #messages li.user-message {
+                background-color: #dcf8c6;
+                align-self: flex-end;
+                text-align: right;
+            }
+            .chat-input {
+                display: flex;
+                align-items: center;
+                padding-top: 12px;
+                border-top: 1px solid #ddd;
+            }
+            #messageText {
+                width: 85%; /* Wider text box */
+                padding: 10px;
+                border-radius: 20px;
+                border: 1px solid #ccc;
+                outline: none;
+                font-size: 1em;
+                box-sizing: border-box;
+            }
+            button {
+                padding: 10px 20px;
+                margin-left: 10px;
+                border-radius: 20px;
+                border: none;
+                background-color: #4CAF50;
+                color: white;
+                cursor: pointer;
+                font-size: 1em;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="chat-container">
+            <h1 class="chat-title">AI Chat Assistant</h1>
+            <ul id="messages"></ul>
+            <div class="chat-input">
+                <form action="" onsubmit="sendMessage(event)">
+                    <input type="text" id="messageText" autocomplete="off" placeholder="Type your message..." />
+                    <button>Send</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script>
+        <script>
+            var ws = new WebSocket("ws://localhost:8080/ws");
+            ws.onmessage = function(event) {
+            if
+            (event.data.includes(">>>>") || 
+            event.data.includes("***") ||
+            event.data.includes("---------------") ||
+            event.data.includes("Starting a new chat....") ||
+            event.data.includes("user_proxy")|| 
+            event.data.includes("Replying as"))
+            {
+            return
+            }
+                var messages = document.getElementById('messages');
+                var message = document.createElement('github-md');
+                var content = document.createTextNode(event.data);
+                message.appendChild(content);
+                messages.appendChild(message);
+                messages.scrollTop = messages.scrollHeight;  // Scroll to latest message
+                renderMarkdown();
+            };
+            
+            function sendMessage(event) {
+                var input = document.getElementById("messageText");
+                if (input.value.trim() !== "") {
+                    var userMessage = document.createElement('li');
+                    userMessage.classList.add('user-message');
+                    userMessage.textContent = input.value;
+                    document.getElementById('messages').appendChild(userMessage);
+                    ws.send(input.value);
+                    input.value = '';
+                }
+                event.preventDefault();
+            }
+        </script>
+    </body>
+</html>

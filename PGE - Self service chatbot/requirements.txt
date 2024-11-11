@@ -1,0 +1,13 @@
+python-dotenv
+langchain_openai
+langchain_core
+python-docx
+PyPDF2
+autogen
+openai
+azure-identity
+langchain_community
+langchain_openai
+langchain_core
+uvicorn
+fastapi

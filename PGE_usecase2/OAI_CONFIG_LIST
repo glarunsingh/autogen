@@ -1,0 +1,10 @@
+[
+    {
+      "model": "DskumarDeployment40-mini",
+      "api_type": "azure",
+      "api_key": "62855d6dd08945819bf83aee0c104127",
+      "base_url": "https://dskumar.openai.azure.com/",
+      "api_version": "2023-07-01-preview"
+    }
+    
+  ]
