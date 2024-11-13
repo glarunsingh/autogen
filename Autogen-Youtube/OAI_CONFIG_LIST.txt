@@ -1,0 +1,10 @@
+[
+    {
+      "model": "model",
+      "api_type": "type",
+      "api_key": "key",
+      "base_url": "URL",
+      "api_version": "version"
+    }
+    
+  ]
